@@ -1,13 +1,16 @@
+// Package account contains logic for the bank account Exercism exercise
 package account
 
 import "sync"
 
+// Account is a bank account with a balance, an open flag and a mutex for concurrency
 type Account struct {
 	balance int64
 	open    bool
 	sync.Mutex
 }
 
+// Open opens a bank account
 func Open(initialDeposit int64) *Account {
 	if initialDeposit < 0 {
 		return nil
@@ -16,6 +19,7 @@ func Open(initialDeposit int64) *Account {
 	return &Account{balance: initialDeposit, open: true}
 }
 
+// Close closes a bank account
 func (a *Account) Close() (payout int64, ok bool) {
 	a.Lock()
 	defer a.Unlock()
@@ -30,10 +34,12 @@ func (a *Account) Close() (payout int64, ok bool) {
 	return payout, true
 }
 
+// Balance returns the balance of a bank account
 func (a *Account) Balance() (balance int64, ok bool) {
 	return a.balance, a.open
 }
 
+// Deposit deposits money into a bank account
 func (a *Account) Deposit(amount int64) (newBalance int64, ok bool) {
 	a.Lock()
 	defer a.Unlock()

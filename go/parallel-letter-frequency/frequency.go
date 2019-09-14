@@ -1,3 +1,4 @@
+// Package letter is the package for the Exercism exercise letter
 package letter
 
 // FreqMap records the frequency of each rune in a given text.
@@ -13,6 +14,8 @@ func Frequency(s string) FreqMap {
 	return m
 }
 
+// ConcurrentFrequency counts the frequency of each rune in a given text and returns this
+// data as a FreqMap in a concurrent fashion using channels
 func ConcurrentFrequency(ss []string) FreqMap {
 	var fm = FreqMap{}
 	ch := make(chan FreqMap)
