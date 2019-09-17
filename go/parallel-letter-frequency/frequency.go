@@ -18,7 +18,7 @@ func Frequency(s string) FreqMap {
 // data as a FreqMap in a concurrent fashion using channels
 func ConcurrentFrequency(ss []string) FreqMap {
 	var fm = FreqMap{}
-	ch := make(chan FreqMap)
+	ch := make(chan FreqMap, 10)
 
 	for _, s := range ss {
 		go func(s string, ch chan FreqMap) {
