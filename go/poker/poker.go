@@ -21,7 +21,8 @@ func BestHand(hands []string) ([]string, error) {
 }
 
 func checkHand(h string) bool {
-	vh := regexp.MustCompile(`^((([2-9]|10|J|Q|K|A)(♤|♧|♢|♡) )){4}(([2-9]|10|J|Q|K|A)(♤|♧|♢|♡))$`)
+	card := `([2-9]|10|J|Q|K|A)(♤|♧|♢|♡)`
+	vh := regexp.MustCompile(`^(` + card + ` ){4}` + card + `$`)
 
 	return vh.MatchString(h)
 }
