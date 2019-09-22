@@ -4,6 +4,7 @@ package poker
 import (
 	"errors"
 	"regexp"
+	"strings"
 )
 
 // BestHand returns the best poker hand out of a set of hands
@@ -17,12 +18,26 @@ func BestHand(hands []string) ([]string, error) {
 		}
 	}
 
+	if len(hands) == 1 {
+		return hands, nil
+	}
+
 	return bh, nil
 }
 
 func checkHand(h string) bool {
-	card := `([2-9]|10|J|Q|K|A)(♤|♧|♢|♡)`
-	vh := regexp.MustCompile(`^(` + card + ` ){4}` + card + `$`)
+	cardRegex := regexp.MustCompile(`^([2-9]|10|J|Q|K|A)(♤|♧|♢|♡)$`)
+	cards := strings.Split(h, " ")
 
-	return vh.MatchString(h)
+	if len(cards) != 5 {
+		return false
+	}
+
+	for _, c := range cards {
+		if !cardRegex.MatchString(c) {
+			return false
+		}
+	}
+
+	return true
 }
